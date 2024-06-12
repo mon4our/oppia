@@ -64,6 +64,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   KEYBOARD_EVENT_TO_KEY_CODES!: {};
   directiveSubscriptions: Subscription = new Subscription();
   classroomPageIsActive: boolean = false;
+  communitylibraryPageIsActive: boolean = false;
   searchButtonIsActive: boolean = false;
   searchQuery: string = '';
   searchQueryChanged: Subject<string> = new Subject<string>();
@@ -87,6 +88,10 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       .getPathname()
       .startsWith('/learn');
     this.isSearchButtonActive();
+    this.communitylibraryPageIsActive = this.urlService
+      .getPathname()
+      .startsWith('/community');
+    this.isSearchButtonActive();
   }
 
   isMobileViewActive(): boolean {
@@ -95,7 +100,9 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   isSearchButtonActive(): boolean {
     this.searchButtonIsActive =
-      this.classroomPageIsActive || this.isMobileViewActive();
+      this.classroomPageIsActive ||
+      this.isMobileViewActive() ||
+      this.communitylibraryPageIsActive;
     return this.searchButtonIsActive;
   }
 
